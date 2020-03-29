@@ -35,9 +35,6 @@ shellcheck:
 	$(SHELLCHECK_IMAGE) \
 	$(wildcard *.sh)
 
-# -c \
-# "find /code/ -type f -name '*.sh' | xargs shellcheck"
-
 .PHONY: test-start-server
 test-start-server:
 	$(MAKE) test-stop-server
