@@ -8,7 +8,7 @@ ARG steam_password=
 ARG metamod_version=1.20
 ARG amxmod_version=1.8.2
 
-RUN apt update -q && apt install -y \
+RUN apt-get update -q && apt-get install -y \
     lib32gcc1 \
     curl
 
