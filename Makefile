@@ -13,7 +13,7 @@ DOCKER_PUBLISH_NAME?="hlds/server"
 DOCKER_PUBLISH_TAG?=$(IMAGE_TAG)
 
 # Test tools
-SHELLCHECK_IMAGE?="koalaman/shellcheck:v0.4.6"
+SHELLCHECK_IMAGE?="koalaman/shellcheck:latest"
 TEST_CONTAINER_NAME?="test_hlds_auto"
 TEST_CONTAINER_PORT?="27111"
 HLDS_NAME?="Test auto"
@@ -31,9 +31,12 @@ test: shellcheck test-smoke test-clean
 
 .PHONY: shellcheck
 shellcheck:
-	docker run --rm -v $(PWD):/code \
-	--entrypoint sh $(SHELLCHECK_IMAGE) -c \
-	"find /code/ -type f -name '*.sh' | xargs shellcheck"
+	docker run --rm -v $(PWD):/mnt \
+	$(SHELLCHECK_IMAGE) \
+	$(wildcard *.sh)
+
+# -c \
+# "find /code/ -type f -name '*.sh' | xargs shellcheck"
 
 .PHONY: test-start-server
 test-start-server:
