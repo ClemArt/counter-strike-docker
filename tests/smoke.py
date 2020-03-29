@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from __future__ import print_function
 
@@ -19,7 +19,7 @@ sock.settimeout(3)
 
 request_data = 'ffffffff54536f7572636520456e67696e6520517565727900'
 retries = 10
-request_bytes = bytearray(request_data.decode('hex'))
+request_bytes = bytearray(bytes.fromhex(request_data))
 
 while retries:
     retries -= 1
@@ -30,9 +30,8 @@ while retries:
         if not retries:
             raise socket.timeout('Nothing was received from HLDS')
 
-match = re.match('.*{0}.*{1}.*{2}.*'.format(server_name,
-                                            map_name,
-                                            game_name),
+expected = '.*{0}.*{1}.*{2}.*'.format(server_name, map_name, game_name)
+match = re.match(str.encode(expected, 'ASCII'),
                  response_data)
 
 assert match, ("Server discovery test failed!"
